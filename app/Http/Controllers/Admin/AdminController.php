@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use App\Models\Appointment;
 use App\Models\Contact;
+use App\Models\Setting;
 use App\Notifications\AppointmentStatusChanged;
 
 
@@ -142,15 +143,66 @@ class AdminController extends Controller
 
      public function check_password(Request $request) {
 
-             return (Hash::check($request->password, Auth::user()->password));
+          return (Hash::check($request->password, Auth::user()->password));
+      }
 
-        }
+     public function patients() {
+      $data = Appointment::latest('id')->paginate();
+      return view('admin.patients', compact('data'));
+    }
+
+    public function settings() {
+        // $settings = Setting::select('key', 'value')->get()->toArray();
+        // $new_array = [];
+        // foreach($settings as $item) {
+        //     $new_array[$item['key']] = $item['value'];             
+        // }
+        // $settings = $new_array;
+        $settings = Setting::pluck('value', 'key')->toArray();
+        return view('admin.settings', compact('settings'));
+    }
+
+    public function save_settings(Request $request) {
+          
+          $data = $request->except('_token', '_method', 'website_logo'); 
+
+          if($request->hasFile('website_logo')) {
+               $old_img = Setting::where('key', 'website_logo')->first();
+               if($old_img) {
+                  File::delete('settings_imgs/'.$old_img['value']);
+               }
+               \Illuminate\Support\Facades\Artisan::call('cache:clear');
+               $img = $request->File('website_logo');
+               $img_name = rand().time().$img->getClientOriginalName();
+               $img->move(public_path('settings_imgs'), $img_name);
+               $data['website_logo'] = $img_name;
+
+          }
+
+          foreach ($data as $key => $value) {
+                Setting::updateOrCreate([
+                     'key' => $key,
+                ],[
+                     'value' => $value,
+                ]);
+          }
+
+          return redirect()->back()->with('msg', 'Update Setting Done')
+          ->with('type', 'success');
 
 
-        public function patients() {
-          $data = Appointment::latest('id')->paginate();
-          return view('admin.patients', compact('data'));
-        }
+    }
+
+    public function del_logo_site(Request $request) {
+           
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+         Setting::where('key', 'website_logo')->update([
+             'value' => null
+         ]);
+
+         return response()->json(['message' => 'Logo Delete Done']);
+
+    }
 
 
 }

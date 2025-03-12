@@ -54,24 +54,24 @@
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-phone" aria-hidden="true"></i>
-                              <span class="padding_15">Call : +01 1234567890</span></a>
+                              <span class="padding_15">Call : {{getSettings('phone')}}</span></a>
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>
-                              <span class="padding_15">Email : demo@gmail.com</span></a>
+                              <span class="padding_15">Email : {{getSettings('email')}}</span></a>
                            </li>
                         </ul>
                      </div>
                      <div class="footer_social_icon">
                         <ul>
                            <li>
-                              <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                              <a href="{{getSettings('facebaook')}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                            </li>
                            <li>
-                              <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                              <a href="{{getSettings('twitter')}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                            </li>
                            <li>
-                              <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                              <a href="{{getSettings('linkedlin')}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>

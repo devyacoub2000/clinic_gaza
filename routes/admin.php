@@ -19,6 +19,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth', 'is_admin')->group(fu
    Route::post('check-password', [AdminController::class, 'check_password'])
     ->name('check_password');
 
+   Route::get('settings', [AdminController::class, 'settings'])->name('settings');
+   Route::put('settings', [AdminController::class, 'save_settings']); 
+
+   Route::get('del-logo-site', [AdminController::class, 'del_logo_site']);
+
   Route::get('apppintments', [AdminController::class, 'show_appointments'])->name('show_appointments');
   
   Route::put('updat_status/{id}', [AdminController::class, 'updat_status'])->name('updat_status');

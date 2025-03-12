@@ -8,10 +8,10 @@
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ml-auto">
                      <li class="nav-item active">
-                        <a class="nav-link" href="{{url('/')}}">Home</a>
+                        <a class="nav-link" href="{{Auth::check() && Auth::user()->type == 'admin' ? route('admin.index') : route('front.index')}}">Home</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="">About</a>
+                        <a class="nav-link" href="{{route('front.about')}}">About</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link" href="{{route('front.treatment')}}">Treatment</a>
