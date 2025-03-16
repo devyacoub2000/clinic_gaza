@@ -28,6 +28,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth', 'is_admin')->group(fu
   
   Route::put('updat_status/{id}', [AdminController::class, 'updat_status'])->name('updat_status');
   Route::get('contact', [AdminController::class, 'show_contacts'])->name('show_contacts');
+  Route::get('single_contact/{id}', [AdminController::class, 'single_contact'])->name('single_contact');
+
+  Route::post('contact_reply/{id}', [AdminController::class, 'contact_reply'])->name('contact.reply');
    
  Route::delete('remve_contact/{id}', [AdminController::class, 'remve_contact'])->name('remve_contact');
 

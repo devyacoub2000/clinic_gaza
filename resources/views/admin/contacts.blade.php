@@ -1,7 +1,7 @@
 
 @extends('admin.app')
 
-@section('title', 'All Appointments')
+@section('title', 'All Contacts')
 
 @section('content')
 
@@ -14,7 +14,7 @@
        </div>
      @endif 
     <h1 class="h3 mb-4 text-gray-800" style="cursor: pointer;">
-       ALL Appointments 
+       ALL Contacts Messages 
     </h1>
 
     <table class="table table-bordered table-hover">
@@ -36,7 +36,7 @@
                  <td>{{$item->message}}</td>
 
                  <td>
-                   <form class="text-center" action="{{route('admin.remve_contact', $item->id)}}" enctype="multipart/form-data" method="POST">
+                   <form class="text-center d-inline" action="{{route('admin.remve_contact', $item->id)}}" enctype="multipart/form-data" method="POST">
                       @csrf
                       @method('DELETE')
                              
@@ -44,8 +44,12 @@
                               
                       </select>
                   </form>
+
+                  <a href="{{route('admin.single_contact', $item->id)}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                    
                  </td>
+
+                 
              </tr>
          @empty
                <tr>

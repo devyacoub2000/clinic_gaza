@@ -128,7 +128,7 @@
       <!-- Javascript files-->
      
       @include('front.js')
-
+       
       @yield('js')
    </body>
 </html>

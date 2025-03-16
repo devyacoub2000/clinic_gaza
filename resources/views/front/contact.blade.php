@@ -9,9 +9,9 @@
 
                   <div class="header_top_main">
                      @foreach(App\Models\Address::all() as $item)
-                     <div class="call_text"><a href="#"><span class="padding_right0"><i class="fa fa-phone" aria-hidden="true"></i></span>  Call : +01 1234567890</a></div>
-                     <div class="call_text_2"><a href="#"><span class="padding_right0"><i class="fa fa-envelope" aria-hidden="true"></i></span> demo@gmail.com</a></div>
-                     <div class="call_text_1"><a href="#"><span class="padding_right0"><i class="fa fa-map-marker" aria-hidden="true"></i></span> Location</a></div>
+                     <div class="call_text"><a href="#"><span class="padding_right0"><i class="fa fa-phone" aria-hidden="true"></i></span>  Call : {{$item->phone}}</a></div>
+                     <div class="call_text_2"><a href="#"><span class="padding_right0"><i class="fa fa-envelope" aria-hidden="true"></i></span> {{$item->email}}</a></div>
+                     <div class="call_text_1"><a href="#"><span class="padding_right0"><i class="fa fa-map-marker" aria-hidden="true"></i></span> {{$item->location}}</a></div>
                      @endforeach
                   </div>
                </div>
@@ -33,15 +33,21 @@
                      <h1 class="contact_taital">Get In Touch</h1>
                      <form action="{{route('front.store_conatct')}}" method="POST">
                         @csrf
-                        <div class="mail_section_1">
-                           <input type="text" class="mail_text" placeholder="Name" name="name">
-                           <input type="tel" class="mail_text" placeholder="Phone Number" name="phone"> 
-                           <input type="email" class="mail_text" placeholder="Email" name="email">
-                           <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="message"></textarea>
-                           <div class="send_bt">
-                              <button class="btn btn-primary" style="width:120px; height: 40px;"> Send</button>
+                           <div class="mail_section_1">
+                              <input type="text" class="mail_text" placeholder="Name" name="name">
+
+                              <input type="tel" class="mail_text" placeholder="Phone Number" name="phone"> 
+
+                              <input type="email" class="mail_text" placeholder="Email" name="email">
+
+                              <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="message">
+                                 
+                              </textarea>
+
+                              <div class="send_bt">
+                                 <button class="btn btn-primary" style="width:120px; height: 40px;"> Send</button>
+                              </div>
                            </div>
-                        </div>
                      </form>
                   </div>
                   <div class="col-md-6 padding_left_15">
@@ -153,3 +159,25 @@
 
    </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+         <script type="text/javascript">
+              const Toast = Swal.mixin({
+                     toast: true,
+                     position: "top-end",
+                     showConfirmButton: false,
+                     timer: 3000,
+                     timerProgressBar: true,
+                     didOpen: (toast) => {
+                     toast.onmouseenter = Swal.stopTimer;
+                     toast.onmouseleave = Swal.resumeTimer;
+                     }
+                  });
+                   
+               @if(session('msg'))  
+                 Toast.fire({
+                 icon: "success",
+                 title: "{{session('msg')}}"
+               });
+               @endif
+         </script>

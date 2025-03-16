@@ -11,6 +11,8 @@ use App\Models\Appointment;
 use App\Models\Contact;
 use App\Models\Setting;
 use App\Notifications\AppointmentStatusChanged;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactReply;
 
 
 
@@ -28,12 +30,24 @@ class AdminController extends Controller
 
    public function remve_contact($id) {
       $data = Contact::findOrFail($id);
-
       $data->delete();
       return redirect()->route('admin.show_contacts')
       ->with('msg', 'Remove Contact Successfully')
       ->with('type', 'danger');
    }
+
+    public function single_contact($id) {
+      
+      $item = Contact::findOrFail($id);
+      
+      return view('admin.single_contact', compact('item'));
+    }
+
+    public function contact_reply(Request $request, $id) {
+        $message = Contact::findOrFail($id);
+        Mail::to($message->email)->send(new ContactReply($message->name, $request->reply));
+        return redirect()->back()->with('msg', 'Reply Message Send Successfully .. ');
+    }
 
     public function updat_status(Request $request, $id) {
       

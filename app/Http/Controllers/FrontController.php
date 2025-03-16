@@ -70,7 +70,7 @@ class FrontController extends Controller
        ]);
 
        Contact::create($request->all());
-       return redirect()->route('front.index')->with('msg', 'Contact Request Successfully');
+       return redirect()->route('front.contact')->with('msg', 'Contact Request Successfully');
     }
 
 
